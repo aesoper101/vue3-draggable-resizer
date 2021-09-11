@@ -5,40 +5,17 @@
   >
     <DraggableContainer>
       <DraggableResizer>
-        <img
-          alt="Vue logo"
-          src="./assets/logo.png"
-          ref="target"
-          @click="x"
-          width="200"
-          height="200"
-        />
+        <img alt="Vue logo" src="./assets/logo.png" ref="target" width="200" height="200" />
       </DraggableResizer>
       <DraggableResizer>
-        <img
-          alt="Vue logo"
-          src="./assets/logo.png"
-          ref="target"
-          @click="x"
-          width="200"
-          height="200"
-        />
+        <img alt="Vue logo" src="./assets/logo.png" ref="target" width="200" height="200" />
       </DraggableResizer>
     </DraggableContainer>
-
-    {{ left }}
   </div>
 </template>
 <script setup lang="ts">
   import { DraggableResizer, DraggableContainer } from "../components";
   import "../components/index.scss";
-  import { useState } from "vue3-normal-library";
-
-  const [left, setLeft] = useState(0);
-
-  const x = () => {
-    setLeft(left.value + 1);
-  };
 </script>
 <style>
   #app {
