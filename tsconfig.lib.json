@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     "declaration": true,
     "declarationDir": "dist/types",
+    "removeComments": true,
     "baseUrl": ".",
     "outDir": "dist",
     "noEmitOnError": true,
@@ -20,6 +21,11 @@
     "typeRoots": ["types"],
     "types": ["vite/client"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "components/**/*.ts",
+    "components/**/*.d.ts",
+    "components/**/*.tsx",
+    "components/**/*.vue"
+  ],
   "exclude": ["node_modules", "public", "favicon.ico", "main.ts"]
 }

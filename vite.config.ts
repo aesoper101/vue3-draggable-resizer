@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import * as path from "path";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import dts from "vite-plugin-dts";
 
 import pkg from "./package.json";
 
@@ -30,5 +31,21 @@ export default defineConfig({
       plugins: [],
     },
   },
-  plugins: [vue(), vueJsx()],
+  plugins: [
+    vue(),
+    vueJsx(),
+    dts({
+      root: ".",
+      tsConfigFilePath: "./tsconfig.lib.json",
+      insertTypesEntry: false,
+      copyDtsFiles: false,
+      outputDir: "dist/types",
+      beforeWriteFile: (filePath, content) => {
+        const origin = path.resolve(__dirname, "dist/types/components");
+        const replaceVal = path.resolve(__dirname, "dist/types");
+        const newFilepath = filePath.replace(origin, replaceVal);
+        return { filePath: newFilepath, content };
+      },
+    }),
+  ],
 });
