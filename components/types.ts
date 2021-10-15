@@ -6,6 +6,7 @@ export interface Position {
   y: number;
   w: number;
   h: number;
+  r: number;
 }
 
 export interface PositionStore {

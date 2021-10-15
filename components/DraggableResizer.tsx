@@ -51,7 +51,7 @@ export const VdrProps = {
     type: Number,
     default: 0,
   },
-  rotate: {
+  r: {
     type: Number,
     default: 0,
   },
@@ -156,7 +156,7 @@ const emits = [
   "update:h",
   "update:x",
   "update:y",
-  "update:rotate",
+  "update:r",
   "update:active",
 ];
 
@@ -237,6 +237,7 @@ const VueDraggableResizable = defineComponent({
         y: this.top,
         w: this.width,
         h: this.height,
+        r: this.rotate,
       });
     }
   },

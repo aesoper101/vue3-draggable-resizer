@@ -16,15 +16,7 @@ import {
   ResizingHandle,
 } from "./types";
 import { VdrProps } from "./DraggableResizer";
-
-export function useState<T>(initialState: T): [Ref<T>, (value: T) => T] {
-  const state = ref(initialState) as Ref<T>;
-  const setState = (value: T): T => {
-    state.value = value;
-    return value;
-  };
-  return [state, setState];
-}
+import { useState } from "vue3-normal-library";
 
 export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
   const [width, setWidthFunc] = useState<number>(props.initW);
@@ -32,7 +24,7 @@ export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
   const [left, setLeftFunc] = useState<number>(props.x);
   const [top, setTopFunc] = useState<number>(props.y);
   const [zIndex, setZIndex] = useState<number>(props.z);
-  const [rotate, setRotate] = useState<number>(props.rotate);
+  const [rotate, setRotate] = useState<number>(props.r);
   const [enable, setEnable] = useState<boolean>(props.active);
   const [rotating, setRotating] = useState<boolean>(false);
   const [dragging, setDragging] = useState<boolean>(false);
@@ -60,7 +52,7 @@ export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
   watch(
     rotate,
     (newVal) => {
-      emit("update:rotate", newVal);
+      emit("update:r", newVal || 0);
     },
     { immediate: true }
   );
@@ -146,12 +138,13 @@ export function initLimitSizeAndMethods(
     height,
     left,
     top,
+    rotate,
     resizingMaxWidth,
     resizingMaxHeight,
     resizingMinWidth,
     resizingMinHeight,
   } = containerProps;
-  const { setWidth, setHeight, setTop, setLeft } = containerProps;
+  const { setWidth, setHeight, setTop, setLeft, setRotate } = containerProps;
   const { parentWidth, parentHeight } = parentSize;
   const limitProps = {
     minWidth: computed(() => {
@@ -216,6 +209,12 @@ export function initLimitSizeAndMethods(
       }
       return setLeft(Math.min(limitProps.maxLeft.value, Math.max(limitProps.minLeft.value, val)));
     },
+    setRotate(val: number) {
+      if (!props.rotatable) {
+        return rotate.value;
+      }
+      return setRotate(val || 0);
+    },
   };
   return {
     ...limitProps,
@@ -244,7 +243,7 @@ export function initDraggableContainer(
   containerProvider: ContainerProvider | null,
   parentSize: ReturnType<typeof initParent>
 ) {
-  const { left: x, top: y, width: w, height: h, dragging, id } = containerProps;
+  const { left: x, top: y, width: w, height: h, dragging, id, rotate: r } = containerProps;
   const { setDragging, setEnable, setResizing, setResizingHandle } = containerProps;
   const { setTop, setLeft } = limitProps;
   let lstX = 0;
@@ -274,6 +273,7 @@ export function initDraggableContainer(
         y: y.value,
         w: w.value,
         h: h.value,
+        r: r.value,
       });
       containerProvider.setMatchedLine(null);
     }
@@ -534,7 +534,7 @@ export function initResizeHandle(
 }
 
 export function watchProps(props: any, limits: ReturnType<typeof initLimitSizeAndMethods>) {
-  const { setWidth, setHeight, setLeft, setTop } = limits;
+  const { setWidth, setHeight, setLeft, setTop, setRotate } = limits;
   watch(
     () => props.w,
     (newVal: number) => {
@@ -557,6 +557,12 @@ export function watchProps(props: any, limits: ReturnType<typeof initLimitSizeAn
     () => props.y,
     (newVal: number) => {
       setTop(newVal);
+    }
+  );
+  watch(
+    () => props.r,
+    (newVal: number) => {
+      setRotate(newVal);
     }
   );
 }

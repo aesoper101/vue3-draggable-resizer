@@ -3,8 +3,9 @@
     style="height: 500px; width: 500px; background: red; margin: auto; position: relative"
     ref="container"
   >
+    {{ r }}
     <DraggableContainer>
-      <DraggableResizer>
+      <DraggableResizer v-model:r="r">
         <img alt="Vue logo" src="./assets/logo.png" ref="target" width="200" height="200" />
       </DraggableResizer>
       <DraggableResizer>
@@ -16,6 +17,9 @@
 <script setup lang="ts">
   import { DraggableResizer, DraggableContainer } from "../components";
   import "../components/index.scss";
+  import { ref } from "vue";
+
+  const r = ref(0);
 </script>
 <style>
   #app {

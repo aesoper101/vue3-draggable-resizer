@@ -17,12 +17,12 @@
     "prelink": "cd dist && yarn link && cd .. && yarn link vue3-draggable-resizer"
   },
   "dependencies": {
-    "vue": "^3.2.6"
+    "vue": "^3.2.6",
+    "vue3-normal-library": "^0.1.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@intlify/vite-plugin-vue-i18n": "^2.3.0",
     "@types/jest": "^27.0.1",
     "@types/lodash-es": "^4.17.4",
     "@types/node": "^16.7.13",
@@ -44,8 +44,12 @@
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.1",
     "rimraf": "^3.0.2",
-    "rollup-plugin-typescript2": "^0.30.0",
     "sass": "^1.39.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-no-unsupported-browser-features": "^5.0.1",
+    "stylelint-order": "^4.1.0",
     "typescript": "^4.3.2",
     "vite": "^2.5.4",
     "vite-plugin-dts": "^0.8.2",
