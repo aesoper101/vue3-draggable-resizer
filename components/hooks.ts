@@ -575,13 +575,13 @@ export function initRotateContainer(
     if (!containerRef.value) return;
     const angle = calcAngle(containerRef.value, e) % 360;
     setRotate(angle);
-    emit("rotating", rotate);
+    emit("rotating", rotate.value);
   };
 
   const rotateHandleUp = () => {
     if (!containerRef.value) return;
     setRotating(false);
-    emit("rotate-end", rotate);
+    emit("rotate-end", rotate.value);
 
     removeEvent(documentElement, MOVE_HANDLES, rotateHandleDrag);
     removeEvent(documentElement, UP_HANDLES, rotateHandleUp);
@@ -592,7 +592,7 @@ export function initRotateContainer(
     e.stopPropagation();
     if (!containerRef.value) return;
     setRotating(true);
-    emit("rotate-start", rotate);
+    emit("rotate-start", rotate.value);
 
     addEvent(documentElement, MOVE_HANDLES, rotateHandleDrag);
     addEvent(documentElement, UP_HANDLES, rotateHandleUp);
